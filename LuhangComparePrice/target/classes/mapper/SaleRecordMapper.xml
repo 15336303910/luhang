@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luhang.dao.SaleRecordMapper">
+  <resultMap id="BaseResultMap" type="com.luhang.bean.SaleRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="date" jdbcType="DATE" property="date" />
+    <result column="platform_web" jdbcType="VARCHAR" property="platform_web" />
+    <result column="show_price" jdbcType="INTEGER" property="show_price" />
+    <result column="opponent1_price" jdbcType="INTEGER" property="opponent1_price" />
+    <result column="opponent2_price" jdbcType="INTEGER" property="opponent2_price" />
+    <result column="opponent3_price" jdbcType="INTEGER" property="opponent3_price" />
+    <result column="sold_online" jdbcType="INTEGER" property="sold_online" />
+    <result column="remaining_online" jdbcType="INTEGER" property="remaining_online" />
+    <result column="inventory_online" jdbcType="INTEGER" property="inventory_online" />
+    <result column="booking_offline" jdbcType="INTEGER" property="booking_offline" />
+    <result column="sold_offline" jdbcType="INTEGER" property="sold_offline" />
+    <result column="remaining_offline" jdbcType="INTEGER" property="remaining_offline" />
+    <result column="inventory_offline" jdbcType="INTEGER" property="inventory_offline" />
+    <result column="roc" jdbcType="INTEGER" property="roc" />
+    <result column="inventory_total" jdbcType="INTEGER" property="inventory_total" />
+    <result column="remaining_total" jdbcType="INTEGER" property="remaining_total" />
+    <result column="flight_num" jdbcType="VARCHAR" property="flight_num" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, date, platform_web, show_price, opponent1_price, opponent2_price, opponent3_price, 
+    sold_online, remaining_online, inventory_online, booking_offline, sold_offline, remaining_offline, 
+    inventory_offline, roc, inventory_total, remaining_total, flight_num
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sale_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="findAllSaleRecord" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sale_record
+    WHERE
+   <![CDATA[   TO_DAYS( date) - TO_DAYS( NOW( ) )  <= 30 and TO_DAYS( date) - TO_DAYS( NOW( ) ) >=0 ]]>  
+  </select>
+
+
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sale_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.luhang.bean.SaleRecord">
+    insert into sale_record (id, date, platform_web, 
+      show_price, opponent1_price, opponent2_price, 
+      opponent3_price, sold_online, remaining_online, 
+      inventory_online, booking_offline, sold_offline, 
+      remaining_offline, inventory_offline, roc, 
+      inventory_total, remaining_total, flight_num
+      )
+    values (#{id,jdbcType=INTEGER}, #{date,jdbcType=DATE}, #{platform_web,jdbcType=VARCHAR}, 
+      #{show_price,jdbcType=INTEGER}, #{opponent1_price,jdbcType=INTEGER}, #{opponent2_price,jdbcType=INTEGER}, 
+      #{opponent3_price,jdbcType=INTEGER}, #{sold_online,jdbcType=INTEGER}, #{remaining_online,jdbcType=INTEGER}, 
+      #{inventory_online,jdbcType=INTEGER}, #{booking_offline,jdbcType=INTEGER}, #{sold_offline,jdbcType=INTEGER}, 
+      #{remaining_offline,jdbcType=INTEGER}, #{inventory_offline,jdbcType=INTEGER}, #{roc,jdbcType=INTEGER}, 
+      #{inventory_total,jdbcType=INTEGER}, #{remaining_total,jdbcType=INTEGER}, #{flight_num,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.luhang.bean.SaleRecord">
+    insert into sale_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="platform_web != null">
+        platform_web,
+      </if>
+      <if test="show_price != null">
+        show_price,
+      </if>
+      <if test="opponent1_price != null">
+        opponent1_price,
+      </if>
+      <if test="opponent2_price != null">
+        opponent2_price,
+      </if>
+      <if test="opponent3_price != null">
+        opponent3_price,
+      </if>
+      <if test="sold_online != null">
+        sold_online,
+      </if>
+      <if test="remaining_online != null">
+        remaining_online,
+      </if>
+      <if test="inventory_online != null">
+        inventory_online,
+      </if>
+      <if test="booking_offline != null">
+        booking_offline,
+      </if>
+      <if test="sold_offline != null">
+        sold_offline,
+      </if>
+      <if test="remaining_offline != null">
+        remaining_offline,
+      </if>
+      <if test="inventory_offline != null">
+        inventory_offline,
+      </if>
+      <if test="roc != null">
+        roc,
+      </if>
+      <if test="inventory_total != null">
+        inventory_total,
+      </if>
+      <if test="remaining_total != null">
+        remaining_total,
+      </if>
+      <if test="flight_num != null">
+        flight_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="platform_web != null">
+        #{platform_web,jdbcType=VARCHAR},
+      </if>
+      <if test="show_price != null">
+        #{show_price,jdbcType=INTEGER},
+      </if>
+      <if test="opponent1_price != null">
+        #{opponent1_price,jdbcType=INTEGER},
+      </if>
+      <if test="opponent2_price != null">
+        #{opponent2_price,jdbcType=INTEGER},
+      </if>
+      <if test="opponent3_price != null">
+        #{opponent3_price,jdbcType=INTEGER},
+      </if>
+      <if test="sold_online != null">
+        #{sold_online,jdbcType=INTEGER},
+      </if>
+      <if test="remaining_online != null">
+        #{remaining_online,jdbcType=INTEGER},
+      </if>
+      <if test="inventory_online != null">
+        #{inventory_online,jdbcType=INTEGER},
+      </if>
+      <if test="booking_offline != null">
+        #{booking_offline,jdbcType=INTEGER},
+      </if>
+      <if test="sold_offline != null">
+        #{sold_offline,jdbcType=INTEGER},
+      </if>
+      <if test="remaining_offline != null">
+        #{remaining_offline,jdbcType=INTEGER},
+      </if>
+      <if test="inventory_offline != null">
+        #{inventory_offline,jdbcType=INTEGER},
+      </if>
+      <if test="roc != null">
+        #{roc,jdbcType=INTEGER},
+      </if>
+      <if test="inventory_total != null">
+        #{inventory_total,jdbcType=INTEGER},
+      </if>
+      <if test="remaining_total != null">
+        #{remaining_total,jdbcType=INTEGER},
+      </if>
+      <if test="flight_num != null">
+        #{flight_num,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <insert id="insertDate">
+  INSERT into sale_record(date)
+ SELECT str_to_date(#{date}, '%Y-%m-%d ') from  dual 
+ WHERE NOT EXISTS(
+ SELECT 1 FROM sale_record
+ WHERE date=str_to_date(#{date}, '%Y-%m-%d ')
+ )
+  
+  
+  </insert>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.luhang.bean.SaleRecord">
+    update sale_record
+    <set>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="platform_web != null">
+        platform_web = #{platform_web,jdbcType=VARCHAR},
+      </if>
+      <if test="show_price != null">
+        show_price = #{show_price,jdbcType=INTEGER},
+      </if>
+      <if test="opponent1_price != null">
+        opponent1_price = #{opponent1_price,jdbcType=INTEGER},
+      </if>
+      <if test="opponent2_price != null">
+        opponent2_price = #{opponent2_price,jdbcType=INTEGER},
+      </if>
+      <if test="opponent3_price != null">
+        opponent3_price = #{opponent3_price,jdbcType=INTEGER},
+      </if>
+      <if test="sold_online != null">
+        sold_online = #{sold_online,jdbcType=INTEGER},
+      </if>
+      <if test="remaining_online != null">
+        remaining_online = #{remaining_online,jdbcType=INTEGER},
+      </if>
+      <if test="inventory_online != null">
+        inventory_online = #{inventory_online,jdbcType=INTEGER},
+      </if>
+      <if test="booking_offline != null">
+        booking_offline = #{booking_offline,jdbcType=INTEGER},
+      </if>
+      <if test="sold_offline != null">
+        sold_offline = #{sold_offline,jdbcType=INTEGER},
+      </if>
+      <if test="remaining_offline != null">
+        remaining_offline = #{remaining_offline,jdbcType=INTEGER},
+      </if>
+      <if test="inventory_offline != null">
+        inventory_offline = #{inventory_offline,jdbcType=INTEGER},
+      </if>
+      <if test="roc != null">
+        roc = #{roc,jdbcType=INTEGER},
+      </if>
+      <if test="inventory_total != null">
+        inventory_total = #{inventory_total,jdbcType=INTEGER},
+      </if>
+      <if test="remaining_total != null">
+        remaining_total = #{remaining_total,jdbcType=INTEGER},
+      </if>
+      <if test="flight_num != null">
+        flight_num = #{flight_num,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateBySelective" parameterType="com.luhang.bean.SaleRecord">
+    update sale_record
+    <set>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="platform_web != null">
+        platform_web = #{platform_web,jdbcType=VARCHAR},
+      </if>
+      <if test="show_price != null">
+        show_price = #{show_price,jdbcType=INTEGER},
+      </if>
+      <if test="opponent1_price != null">
+        opponent1_price = #{opponent1_price,jdbcType=INTEGER},
+      </if>
+      <if test="opponent2_price != null">
+        opponent2_price = #{opponent2_price,jdbcType=INTEGER},
+      </if>
+      <if test="opponent3_price != null">
+        opponent3_price = #{opponent3_price,jdbcType=INTEGER},
+      </if>
+      <if test="sold_online != null">
+        sold_online = #{sold_online,jdbcType=INTEGER},
+      </if>
+      <if test="remaining_online != null">
+        remaining_online = #{remaining_online,jdbcType=INTEGER},
+      </if>
+      <if test="inventory_online != null">
+        inventory_online = #{inventory_online,jdbcType=INTEGER},
+      </if>
+      <if test="booking_offline != null">
+        booking_offline = #{booking_offline,jdbcType=INTEGER},
+      </if>
+      <if test="sold_offline != null">
+        sold_offline = #{sold_offline,jdbcType=INTEGER},
+      </if>
+      <if test="remaining_offline != null">
+        remaining_offline = #{remaining_offline,jdbcType=INTEGER},
+      </if>
+      <if test="inventory_offline != null">
+        inventory_offline = #{inventory_offline,jdbcType=INTEGER},
+      </if>
+      <if test="roc != null">
+        roc = #{roc,jdbcType=INTEGER},
+      </if>
+      <if test="inventory_total != null">
+        inventory_total = #{inventory_total,jdbcType=INTEGER},
+      </if>
+      <if test="remaining_total != null">
+        remaining_total = #{remaining_total,jdbcType=INTEGER},
+      </if>
+      <if test="flight_num != null">
+        flight_num = #{flight_num,jdbcType=VARCHAR},
+      </if>
+    </set>
+       where id = #{id,jdbcType=INTEGER}
+              
+    
+      
+  </update> 
+    <update id="updateByDate" parameterType="com.luhang.bean.SaleRecord">
+    update sale_record
+    <set>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="platform_web != null">
+        platform_web = #{platform_web,jdbcType=VARCHAR},
+      </if>
+      <if test="show_price != null">
+        show_price = #{show_price,jdbcType=INTEGER},
+      </if>
+      <if test="opponent1_price != null">
+        opponent1_price = #{opponent1_price,jdbcType=INTEGER},
+      </if>
+      <if test="opponent2_price != null">
+        opponent2_price = #{opponent2_price,jdbcType=INTEGER},
+      </if>
+      <if test="opponent3_price != null">
+        opponent3_price = #{opponent3_price,jdbcType=INTEGER},
+      </if>
+      <if test="sold_online != null">
+        sold_online = #{sold_online,jdbcType=INTEGER},
+      </if>
+      <if test="remaining_online != null">
+        remaining_online = #{remaining_online,jdbcType=INTEGER},
+      </if>
+      <if test="inventory_online != null">
+        inventory_online = #{inventory_online,jdbcType=INTEGER},
+      </if>
+      <if test="booking_offline != null">
+        booking_offline = #{booking_offline,jdbcType=INTEGER},
+      </if>
+      <if test="sold_offline != null">
+        sold_offline = #{sold_offline,jdbcType=INTEGER},
+      </if>
+      <if test="remaining_offline != null">
+        remaining_offline = #{remaining_offline,jdbcType=INTEGER},
+      </if>
+      <if test="inventory_offline != null">
+        inventory_offline = #{inventory_offline,jdbcType=INTEGER},
+      </if>
+      <if test="roc != null">
+        roc = #{roc,jdbcType=INTEGER},
+      </if>
+      <if test="inventory_total != null">
+        inventory_total = #{inventory_total,jdbcType=INTEGER},
+      </if>
+      <if test="remaining_total != null">
+        remaining_total = #{remaining_total,jdbcType=INTEGER},
+      </if>
+      <if test="flight_num != null">
+        flight_num = #{flight_num,jdbcType=VARCHAR},
+      </if>
+    </set>
+       where 
+                date= #{date,jdbcType=DATE} 
+    
+      
+  </update> 
+  
+  
+  
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.luhang.bean.SaleRecord">
+    update sale_record
+    set date = #{date,jdbcType=DATE},
+      platform_web = #{platform_web,jdbcType=VARCHAR},
+      show_price = #{show_price,jdbcType=INTEGER},
+      opponent1_price = #{opponent1_price,jdbcType=INTEGER},
+      opponent2_price = #{opponent2_price,jdbcType=INTEGER},
+      opponent3_price = #{opponent3_price,jdbcType=INTEGER},
+      sold_online = #{sold_online,jdbcType=INTEGER},
+      remaining_online = #{remaining_online,jdbcType=INTEGER},
+      inventory_online = #{inventory_online,jdbcType=INTEGER},
+      booking_offline = #{booking_offline,jdbcType=INTEGER},
+      sold_offline = #{sold_offline,jdbcType=INTEGER},
+      remaining_offline = #{remaining_offline,jdbcType=INTEGER},
+      inventory_offline = #{inventory_offline,jdbcType=INTEGER},
+      roc = #{roc,jdbcType=INTEGER},
+      inventory_total = #{inventory_total,jdbcType=INTEGER},
+      remaining_total = #{remaining_total,jdbcType=INTEGER},
+      flight_num = #{flight_num,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,38 @@
+{
+
+"cid": "test",
+"tripTpye": "1",
+"sessionId": "S12345",
+"pnrCode": "luhangwuzidong",
+"orderNo":"sfalfjasfjalsfalsfja",
+"routing": {
+"data": "3da0a93eba26c6e8f28955fe65f426fadbec03d9",
+
+"fromSegments": [
+{
+
+"carrier": "7C",
+"depAirport": "WEH",
+
+"depTime": "201812181810",
+"arrAirport": "SEL",
+
+"arrTime": "201812181916",
+"stopCities": "",
+
+"codeshare": false,
+
+"cabin": "E",
+"aircraftCode": "Boeing 737",
+
+"flightNumber": "7C8504",
+"group": 1
+}
+]
+
+}
+
+
+
+
+}

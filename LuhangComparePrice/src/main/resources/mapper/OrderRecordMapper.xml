@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luhang.dao.OrderRecordMapper">
+  <resultMap id="BaseResultMap" type="com.luhang.bean.OrderRecord">
+    <id column="order_id" jdbcType="INTEGER" property="order_id" />
+    <result column="order_num" jdbcType="VARCHAR" property="order_num" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="create_time" />
+    <result column="passenger_total" jdbcType="INTEGER" property="passenger_total" />
+    <result column="routing_id" jdbcType="INTEGER" property="routing_id" />
+    <result column="contact_name" jdbcType="VARCHAR" property="contact_name" />
+    <result column="mobile_num" jdbcType="VARCHAR" property="mobile_num" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, order_num, create_time, passenger_total, routing_id, contact_name, mobile_num
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order_record
+    where order_id = #{order_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from order_record
+    where order_id = #{order_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.luhang.bean.OrderRecord">
+    insert into order_record (order_id, order_num, create_time, 
+      passenger_total, routing_id, contact_name, 
+      mobile_num)
+    values (#{order_id,jdbcType=INTEGER}, #{order_num,jdbcType=VARCHAR}, #{create_time,jdbcType=TIMESTAMP}, 
+      #{passenger_total,jdbcType=INTEGER}, #{routing_id,jdbcType=INTEGER}, #{contact_name,jdbcType=VARCHAR}, 
+      #{mobile_num,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luhang.bean.OrderRecord">
+    insert into order_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="order_id != null">
+        order_id,
+      </if>
+      <if test="order_num != null">
+        order_num,
+      </if>
+      <if test="create_time != null">
+        create_time,
+      </if>
+      <if test="passenger_total != null">
+        passenger_total,
+      </if>
+      <if test="routing_id != null">
+        routing_id,
+      </if>
+      <if test="contact_name != null">
+        contact_name,
+      </if>
+      <if test="mobile_num != null">
+        mobile_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="order_id != null">
+        #{order_id,jdbcType=INTEGER},
+      </if>
+      <if test="order_num != null">
+        #{order_num,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="passenger_total != null">
+        #{passenger_total,jdbcType=INTEGER},
+      </if>
+      <if test="routing_id != null">
+        #{routing_id,jdbcType=INTEGER},
+      </if>
+      <if test="contact_name != null">
+        #{contact_name,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile_num != null">
+        #{mobile_num,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luhang.bean.OrderRecord">
+    update order_record
+    <set>
+      <if test="order_num != null">
+        order_num = #{order_num,jdbcType=VARCHAR},
+      </if>
+      <if test="create_time != null">
+        create_time = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="passenger_total != null">
+        passenger_total = #{passenger_total,jdbcType=INTEGER},
+      </if>
+      <if test="routing_id != null">
+        routing_id = #{routing_id,jdbcType=INTEGER},
+      </if>
+      <if test="contact_name != null">
+        contact_name = #{contact_name,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile_num != null">
+        mobile_num = #{mobile_num,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_id = #{order_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luhang.bean.OrderRecord">
+    update order_record
+    set order_num = #{order_num,jdbcType=VARCHAR},
+      create_time = #{create_time,jdbcType=TIMESTAMP},
+      passenger_total = #{passenger_total,jdbcType=INTEGER},
+      routing_id = #{routing_id,jdbcType=INTEGER},
+      contact_name = #{contact_name,jdbcType=VARCHAR},
+      mobile_num = #{mobile_num,jdbcType=VARCHAR}
+    where order_id = #{order_id,jdbcType=INTEGER}
+  </update>
+</mapper>

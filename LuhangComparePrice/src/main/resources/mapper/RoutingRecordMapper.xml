@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luhang.dao.RoutingRecordMapper">
+  <resultMap id="BaseResultMap" type="com.luhang.bean.RoutingRecord">
+    <id column="p_id" jdbcType="INTEGER" property="p_id" />
+    <result column="carrier" jdbcType="VARCHAR" property="carrier" />
+    <result column="flight_number" jdbcType="VARCHAR" property="flight_number" />
+    <result column="dep_airport" jdbcType="VARCHAR" property="dep_airport" />
+    <result column="dep_time" jdbcType="TIMESTAMP" property="dep_time" />
+    <result column="arr_airport" jdbcType="VARCHAR" property="arr_airport" />
+    <result column="arr_time" jdbcType="TIMESTAMP" property="arr_time" />
+    <result column="stop_city" jdbcType="VARCHAR" property="stop_city" />
+    <result column="code_share" jdbcType="BIT" property="code_share" />
+    <result column="cabin" jdbcType="VARCHAR" property="cabin" />
+    <result column="aircraft_code" jdbcType="VARCHAR" property="aircraft_code" />
+    <result column="cabin_class" jdbcType="INTEGER" property="cabin_class" />
+    <result column="group" jdbcType="INTEGER" property="group" />
+    <result column="data" jdbcType="VARCHAR" property="data" />
+    <result column="currency" jdbcType="VARCHAR" property="currency" />
+    <result column="adult_price" jdbcType="INTEGER" property="adult_price" />
+    <result column="adult_tax" jdbcType="INTEGER" property="adult_tax" />
+    <result column="child_price" jdbcType="INTEGER" property="child_price" />
+    <result column="child_tax" jdbcType="INTEGER" property="child_tax" />
+    <result column="nationality_type" jdbcType="INTEGER" property="nationality_type" />
+    <result column="nationality" jdbcType="VARCHAR" property="nationality" />
+    <result column="suit_age" jdbcType="VARCHAR" property="suit_age" />
+    <result column="price_type" jdbcType="INTEGER" property="price_type" />
+    <result column="applyType" jdbcType="INTEGER" property="applyType" />
+    <result column="adultTaxType" jdbcType="INTEGER" property="adultTaxType" />
+    <result column="childTaxType" jdbcType="INTEGER" property="childTaxType" />
+    <result column="ticket_timelimit" jdbcType="INTEGER" property="ticket_timelimit" />
+    <result column="ticket_invoicetype" jdbcType="INTEGER" property="ticket_invoicetype" />
+    <result column="tag" jdbcType="INTEGER" property="tag" />
+    <result column="has_refund" jdbcType="INTEGER" property="has_refund" />
+    <result column="refund" jdbcType="VARCHAR" property="refund" />
+    <result column="part_refund" jdbcType="INTEGER" property="part_refund" />
+    <result column="part_refundprice" jdbcType="VARCHAR" property="part_refundprice" />
+    <result column="has_endorse" jdbcType="INTEGER" property="has_endorse" />
+    <result column="endorse" jdbcType="VARCHAR" property="endorse" />
+    <result column="part_endorse" jdbcType="INTEGER" property="part_endorse" />
+    <result column="part_endorseprice" jdbcType="VARCHAR" property="part_endorseprice" />
+    <result column="endorsement" jdbcType="INTEGER" property="endorsement" />
+    <result column="has_noshow" jdbcType="INTEGER" property="has_noshow" />
+    <result column="noshow_limittime" jdbcType="INTEGER" property="noshow_limittime" />
+    <result column="penalty" jdbcType="VARCHAR" property="penalty" />
+    <result column="special_noshow" jdbcType="INTEGER" property="special_noshow" />
+    <result column="other" jdbcType="VARCHAR" property="other" />
+    <result column="has_baggage" jdbcType="INTEGER" property="has_baggage" />
+    <result column="baggage" jdbcType="VARCHAR" property="baggage" />
+    <result column="max_seat" jdbcType="INTEGER" property="max_seat" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    p_id, carrier, flight_number, dep_airport, dep_time, arr_airport, arr_time, stop_city, 
+    code_share, cabin, aircraft_code, cabin_class, group, data, currency, adult_price, 
+    adult_tax, child_price, child_tax, nationality_type, nationality, suit_age, price_type, 
+    applyType, adultTaxType, childTaxType, ticket_timelimit, ticket_invoicetype, tag, 
+    has_refund, refund, part_refund, part_refundprice, has_endorse, endorse, part_endorse, 
+    part_endorseprice, endorsement, has_noshow, noshow_limittime, penalty, special_noshow, 
+    other, has_baggage, baggage, max_seat
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from routing_record
+    where p_id = #{p_id,jdbcType=INTEGER}
+  </select>
+  
+   <select id="selectByAirportAndDate" resultMap="BaseResultMap">
+    select   * 
+    from routing_record
+  <![CDATA[     Where   dep_airport   = #{depAirport} and    arr_airport   = #{arrAirport}   and   dep_time  >= #{depStaTime}  and dep_time <  #{depEndTime}      ]]>
+  </select>
+    <select id="selectByAirLineInfo" parameterType="Map" resultMap="BaseResultMap">
+    select   * 
+    from routing_record
+ <where>
+ <if test="null !=carrier">
+    <![CDATA[  carrier=#{carrier}  ]]>
+ </if>
+  <if test="null !=depAirport">
+               and   <![CDATA[  dep_airport=#{depAirport}   ]]>
+ </if>
+  <if test="null !=arrAirport">
+               and   <![CDATA[  arr_airport= #{arrAirport} ]]>
+ </if>
+   
+   <if test="null !=cabin">
+               and   <![CDATA[  cabin=#{cabin}   ]]>
+ </if>
+    <if test="null !=aircraftCode">
+               and   <![CDATA[  aircraft_code=#{aircraftCode}  ]]>
+ </if>
+     <if test="null !=flightNumber">
+               and   <![CDATA[  flight_number=#{flightNumber}   ]]>
+ </if>
+      <if test="null !=depTime">
+               and   <![CDATA[  dep_time=#{depTime}   ]]>
+ </if>
+    <if test="null !=arrTime">
+               and   <![CDATA[  arr_time=#{arrTime}   ]]>
+ </if>
+ </where>
+ 
+ 
+ 
+  </select>
+  
+  
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from routing_record
+    where p_id = #{p_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.luhang.bean.RoutingRecord">
+    insert into routing_record (p_id, carrier, flight_number, 
+      dep_airport, dep_time, arr_airport, 
+      arr_time, stop_city, code_share, 
+      cabin, aircraft_code, cabin_class, 
+      group, data, currency, 
+      adult_price, adult_tax, child_price, 
+      child_tax, nationality_type, nationality, 
+      suit_age, price_type, applyType, 
+      adultTaxType, childTaxType, ticket_timelimit, 
+      ticket_invoicetype, tag, has_refund, 
+      refund, part_refund, part_refundprice, 
+      has_endorse, endorse, part_endorse, 
+      part_endorseprice, endorsement, has_noshow, 
+      noshow_limittime, penalty, special_noshow, 
+      other, has_baggage, baggage, 
+      max_seat)
+    values (#{p_id,jdbcType=INTEGER}, #{carrier,jdbcType=VARCHAR}, #{flight_number,jdbcType=VARCHAR}, 
+      #{dep_airport,jdbcType=VARCHAR}, #{dep_time,jdbcType=TIMESTAMP}, #{arr_airport,jdbcType=VARCHAR}, 
+      #{arr_time,jdbcType=TIMESTAMP}, #{stop_city,jdbcType=VARCHAR}, #{code_share,jdbcType=BIT}, 
+      #{cabin,jdbcType=VARCHAR}, #{aircraft_code,jdbcType=VARCHAR}, #{cabin_class,jdbcType=INTEGER}, 
+      #{group,jdbcType=INTEGER}, #{data,jdbcType=VARCHAR}, #{currency,jdbcType=VARCHAR}, 
+      #{adult_price,jdbcType=INTEGER}, #{adult_tax,jdbcType=INTEGER}, #{child_price,jdbcType=INTEGER}, 
+      #{child_tax,jdbcType=INTEGER}, #{nationality_type,jdbcType=INTEGER}, #{nationality,jdbcType=VARCHAR}, 
+      #{suit_age,jdbcType=VARCHAR}, #{price_type,jdbcType=INTEGER}, #{applyType,jdbcType=INTEGER}, 
+      #{adultTaxType,jdbcType=INTEGER}, #{childTaxType,jdbcType=INTEGER}, #{ticket_timelimit,jdbcType=INTEGER}, 
+      #{ticket_invoicetype,jdbcType=INTEGER}, #{tag,jdbcType=INTEGER}, #{has_refund,jdbcType=INTEGER}, 
+      #{refund,jdbcType=VARCHAR}, #{part_refund,jdbcType=INTEGER}, #{part_refundprice,jdbcType=VARCHAR}, 
+      #{has_endorse,jdbcType=INTEGER}, #{endorse,jdbcType=VARCHAR}, #{part_endorse,jdbcType=INTEGER}, 
+      #{part_endorseprice,jdbcType=VARCHAR}, #{endorsement,jdbcType=INTEGER}, #{has_noshow,jdbcType=INTEGER}, 
+      #{noshow_limittime,jdbcType=INTEGER}, #{penalty,jdbcType=VARCHAR}, #{special_noshow,jdbcType=INTEGER}, 
+      #{other,jdbcType=VARCHAR}, #{has_baggage,jdbcType=INTEGER}, #{baggage,jdbcType=VARCHAR}, 
+      #{max_seat,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luhang.bean.RoutingRecord">
+    insert into routing_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="p_id != null">
+        p_id,
+      </if>
+      <if test="carrier != null">
+        carrier,
+      </if>
+      <if test="flight_number != null">
+        flight_number,
+      </if>
+      <if test="dep_airport != null">
+        dep_airport,
+      </if>
+      <if test="dep_time != null">
+        dep_time,
+      </if>
+      <if test="arr_airport != null">
+        arr_airport,
+      </if>
+      <if test="arr_time != null">
+        arr_time,
+      </if>
+      <if test="stop_city != null">
+        stop_city,
+      </if>
+      <if test="code_share != null">
+        code_share,
+      </if>
+      <if test="cabin != null">
+        cabin,
+      </if>
+      <if test="aircraft_code != null">
+        aircraft_code,
+      </if>
+      <if test="cabin_class != null">
+        cabin_class,
+      </if>
+      <if test="group != null">
+        group,
+      </if>
+      <if test="data != null">
+        data,
+      </if>
+      <if test="currency != null">
+        currency,
+      </if>
+      <if test="adult_price != null">
+        adult_price,
+      </if>
+      <if test="adult_tax != null">
+        adult_tax,
+      </if>
+      <if test="child_price != null">
+        child_price,
+      </if>
+      <if test="child_tax != null">
+        child_tax,
+      </if>
+      <if test="nationality_type != null">
+        nationality_type,
+      </if>
+      <if test="nationality != null">
+        nationality,
+      </if>
+      <if test="suit_age != null">
+        suit_age,
+      </if>
+      <if test="price_type != null">
+        price_type,
+      </if>
+      <if test="applyType != null">
+        applyType,
+      </if>
+      <if test="adultTaxType != null">
+        adultTaxType,
+      </if>
+      <if test="childTaxType != null">
+        childTaxType,
+      </if>
+      <if test="ticket_timelimit != null">
+        ticket_timelimit,
+      </if>
+      <if test="ticket_invoicetype != null">
+        ticket_invoicetype,
+      </if>
+      <if test="tag != null">
+        tag,
+      </if>
+      <if test="has_refund != null">
+        has_refund,
+      </if>
+      <if test="refund != null">
+        refund,
+      </if>
+      <if test="part_refund != null">
+        part_refund,
+      </if>
+      <if test="part_refundprice != null">
+        part_refundprice,
+      </if>
+      <if test="has_endorse != null">
+        has_endorse,
+      </if>
+      <if test="endorse != null">
+        endorse,
+      </if>
+      <if test="part_endorse != null">
+        part_endorse,
+      </if>
+      <if test="part_endorseprice != null">
+        part_endorseprice,
+      </if>
+      <if test="endorsement != null">
+        endorsement,
+      </if>
+      <if test="has_noshow != null">
+        has_noshow,
+      </if>
+      <if test="noshow_limittime != null">
+        noshow_limittime,
+      </if>
+      <if test="penalty != null">
+        penalty,
+      </if>
+      <if test="special_noshow != null">
+        special_noshow,
+      </if>
+      <if test="other != null">
+        other,
+      </if>
+      <if test="has_baggage != null">
+        has_baggage,
+      </if>
+      <if test="baggage != null">
+        baggage,
+      </if>
+      <if test="max_seat != null">
+        max_seat,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="p_id != null">
+        #{p_id,jdbcType=INTEGER},
+      </if>
+      <if test="carrier != null">
+        #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="flight_number != null">
+        #{flight_number,jdbcType=VARCHAR},
+      </if>
+      <if test="dep_airport != null">
+        #{dep_airport,jdbcType=VARCHAR},
+      </if>
+      <if test="dep_time != null">
+        #{dep_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="arr_airport != null">
+        #{arr_airport,jdbcType=VARCHAR},
+      </if>
+      <if test="arr_time != null">
+        #{arr_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stop_city != null">
+        #{stop_city,jdbcType=VARCHAR},
+      </if>
+      <if test="code_share != null">
+        #{code_share,jdbcType=BIT},
+      </if>
+      <if test="cabin != null">
+        #{cabin,jdbcType=VARCHAR},
+      </if>
+      <if test="aircraft_code != null">
+        #{aircraft_code,jdbcType=VARCHAR},
+      </if>
+      <if test="cabin_class != null">
+        #{cabin_class,jdbcType=INTEGER},
+      </if>
+      <if test="group != null">
+        #{group,jdbcType=INTEGER},
+      </if>
+      <if test="data != null">
+        #{data,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null">
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="adult_price != null">
+        #{adult_price,jdbcType=INTEGER},
+      </if>
+      <if test="adult_tax != null">
+        #{adult_tax,jdbcType=INTEGER},
+      </if>
+      <if test="child_price != null">
+        #{child_price,jdbcType=INTEGER},
+      </if>
+      <if test="child_tax != null">
+        #{child_tax,jdbcType=INTEGER},
+      </if>
+      <if test="nationality_type != null">
+        #{nationality_type,jdbcType=INTEGER},
+      </if>
+      <if test="nationality != null">
+        #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="suit_age != null">
+        #{suit_age,jdbcType=VARCHAR},
+      </if>
+      <if test="price_type != null">
+        #{price_type,jdbcType=INTEGER},
+      </if>
+      <if test="applyType != null">
+        #{applyType,jdbcType=INTEGER},
+      </if>
+      <if test="adultTaxType != null">
+        #{adultTaxType,jdbcType=INTEGER},
+      </if>
+      <if test="childTaxType != null">
+        #{childTaxType,jdbcType=INTEGER},
+      </if>
+      <if test="ticket_timelimit != null">
+        #{ticket_timelimit,jdbcType=INTEGER},
+      </if>
+      <if test="ticket_invoicetype != null">
+        #{ticket_invoicetype,jdbcType=INTEGER},
+      </if>
+      <if test="tag != null">
+        #{tag,jdbcType=INTEGER},
+      </if>
+      <if test="has_refund != null">
+        #{has_refund,jdbcType=INTEGER},
+      </if>
+      <if test="refund != null">
+        #{refund,jdbcType=VARCHAR},
+      </if>
+      <if test="part_refund != null">
+        #{part_refund,jdbcType=INTEGER},
+      </if>
+      <if test="part_refundprice != null">
+        #{part_refundprice,jdbcType=VARCHAR},
+      </if>
+      <if test="has_endorse != null">
+        #{has_endorse,jdbcType=INTEGER},
+      </if>
+      <if test="endorse != null">
+        #{endorse,jdbcType=VARCHAR},
+      </if>
+      <if test="part_endorse != null">
+        #{part_endorse,jdbcType=INTEGER},
+      </if>
+      <if test="part_endorseprice != null">
+        #{part_endorseprice,jdbcType=VARCHAR},
+      </if>
+      <if test="endorsement != null">
+        #{endorsement,jdbcType=INTEGER},
+      </if>
+      <if test="has_noshow != null">
+        #{has_noshow,jdbcType=INTEGER},
+      </if>
+      <if test="noshow_limittime != null">
+        #{noshow_limittime,jdbcType=INTEGER},
+      </if>
+      <if test="penalty != null">
+        #{penalty,jdbcType=VARCHAR},
+      </if>
+      <if test="special_noshow != null">
+        #{special_noshow,jdbcType=INTEGER},
+      </if>
+      <if test="other != null">
+        #{other,jdbcType=VARCHAR},
+      </if>
+      <if test="has_baggage != null">
+        #{has_baggage,jdbcType=INTEGER},
+      </if>
+      <if test="baggage != null">
+        #{baggage,jdbcType=VARCHAR},
+      </if>
+      <if test="max_seat != null">
+        #{max_seat,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.luhang.bean.RoutingRecord">
+    update routing_record
+    <set>
+      <if test="carrier != null">
+        carrier = #{carrier,jdbcType=VARCHAR},
+      </if>
+      <if test="flight_number != null">
+        flight_number = #{flight_number,jdbcType=VARCHAR},
+      </if>
+      <if test="dep_airport != null">
+        dep_airport = #{dep_airport,jdbcType=VARCHAR},
+      </if>
+      <if test="dep_time != null">
+        dep_time = #{dep_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="arr_airport != null">
+        arr_airport = #{arr_airport,jdbcType=VARCHAR},
+      </if>
+      <if test="arr_time != null">
+        arr_time = #{arr_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stop_city != null">
+        stop_city = #{stop_city,jdbcType=VARCHAR},
+      </if>
+      <if test="code_share != null">
+        code_share = #{code_share,jdbcType=BIT},
+      </if>
+      <if test="cabin != null">
+        cabin = #{cabin,jdbcType=VARCHAR},
+      </if>
+      <if test="aircraft_code != null">
+        aircraft_code = #{aircraft_code,jdbcType=VARCHAR},
+      </if>
+      <if test="cabin_class != null">
+        cabin_class = #{cabin_class,jdbcType=INTEGER},
+      </if>
+      <if test="group != null">
+        group = #{group,jdbcType=INTEGER},
+      </if>
+      <if test="data != null">
+        data = #{data,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null">
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="adult_price != null">
+        adult_price = #{adult_price,jdbcType=INTEGER},
+      </if>
+      <if test="adult_tax != null">
+        adult_tax = #{adult_tax,jdbcType=INTEGER},
+      </if>
+      <if test="child_price != null">
+        child_price = #{child_price,jdbcType=INTEGER},
+      </if>
+      <if test="child_tax != null">
+        child_tax = #{child_tax,jdbcType=INTEGER},
+      </if>
+      <if test="nationality_type != null">
+        nationality_type = #{nationality_type,jdbcType=INTEGER},
+      </if>
+      <if test="nationality != null">
+        nationality = #{nationality,jdbcType=VARCHAR},
+      </if>
+      <if test="suit_age != null">
+        suit_age = #{suit_age,jdbcType=VARCHAR},
+      </if>
+      <if test="price_type != null">
+        price_type = #{price_type,jdbcType=INTEGER},
+      </if>
+      <if test="applyType != null">
+        applyType = #{applyType,jdbcType=INTEGER},
+      </if>
+      <if test="adultTaxType != null">
+        adultTaxType = #{adultTaxType,jdbcType=INTEGER},
+      </if>
+      <if test="childTaxType != null">
+        childTaxType = #{childTaxType,jdbcType=INTEGER},
+      </if>
+      <if test="ticket_timelimit != null">
+        ticket_timelimit = #{ticket_timelimit,jdbcType=INTEGER},
+      </if>
+      <if test="ticket_invoicetype != null">
+        ticket_invoicetype = #{ticket_invoicetype,jdbcType=INTEGER},
+      </if>
+      <if test="tag != null">
+        tag = #{tag,jdbcType=INTEGER},
+      </if>
+      <if test="has_refund != null">
+        has_refund = #{has_refund,jdbcType=INTEGER},
+      </if>
+      <if test="refund != null">
+        refund = #{refund,jdbcType=VARCHAR},
+      </if>
+      <if test="part_refund != null">
+        part_refund = #{part_refund,jdbcType=INTEGER},
+      </if>
+      <if test="part_refundprice != null">
+        part_refundprice = #{part_refundprice,jdbcType=VARCHAR},
+      </if>
+      <if test="has_endorse != null">
+        has_endorse = #{has_endorse,jdbcType=INTEGER},
+      </if>
+      <if test="endorse != null">
+        endorse = #{endorse,jdbcType=VARCHAR},
+      </if>
+      <if test="part_endorse != null">
+        part_endorse = #{part_endorse,jdbcType=INTEGER},
+      </if>
+      <if test="part_endorseprice != null">
+        part_endorseprice = #{part_endorseprice,jdbcType=VARCHAR},
+      </if>
+      <if test="endorsement != null">
+        endorsement = #{endorsement,jdbcType=INTEGER},
+      </if>
+      <if test="has_noshow != null">
+        has_noshow = #{has_noshow,jdbcType=INTEGER},
+      </if>
+      <if test="noshow_limittime != null">
+        noshow_limittime = #{noshow_limittime,jdbcType=INTEGER},
+      </if>
+      <if test="penalty != null">
+        penalty = #{penalty,jdbcType=VARCHAR},
+      </if>
+      <if test="special_noshow != null">
+        special_noshow = #{special_noshow,jdbcType=INTEGER},
+      </if>
+      <if test="other != null">
+        other = #{other,jdbcType=VARCHAR},
+      </if>
+      <if test="has_baggage != null">
+        has_baggage = #{has_baggage,jdbcType=INTEGER},
+      </if>
+      <if test="baggage != null">
+        baggage = #{baggage,jdbcType=VARCHAR},
+      </if>
+      <if test="max_seat != null">
+        max_seat = #{max_seat,jdbcType=INTEGER},
+      </if>
+    </set>
+    where p_id = #{p_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luhang.bean.RoutingRecord">
+    update routing_record
+    set carrier = #{carrier,jdbcType=VARCHAR},
+      flight_number = #{flight_number,jdbcType=VARCHAR},
+      dep_airport = #{dep_airport,jdbcType=VARCHAR},
+      dep_time = #{dep_time,jdbcType=TIMESTAMP},
+      arr_airport = #{arr_airport,jdbcType=VARCHAR},
+      arr_time = #{arr_time,jdbcType=TIMESTAMP},
+      stop_city = #{stop_city,jdbcType=VARCHAR},
+      code_share = #{code_share,jdbcType=BIT},
+      cabin = #{cabin,jdbcType=VARCHAR},
+      aircraft_code = #{aircraft_code,jdbcType=VARCHAR},
+      cabin_class = #{cabin_class,jdbcType=INTEGER},
+      group = #{group,jdbcType=INTEGER},
+      data = #{data,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR},
+      adult_price = #{adult_price,jdbcType=INTEGER},
+      adult_tax = #{adult_tax,jdbcType=INTEGER},
+      child_price = #{child_price,jdbcType=INTEGER},
+      child_tax = #{child_tax,jdbcType=INTEGER},
+      nationality_type = #{nationality_type,jdbcType=INTEGER},
+      nationality = #{nationality,jdbcType=VARCHAR},
+      suit_age = #{suit_age,jdbcType=VARCHAR},
+      price_type = #{price_type,jdbcType=INTEGER},
+      applyType = #{applyType,jdbcType=INTEGER},
+      adultTaxType = #{adultTaxType,jdbcType=INTEGER},
+      childTaxType = #{childTaxType,jdbcType=INTEGER},
+      ticket_timelimit = #{ticket_timelimit,jdbcType=INTEGER},
+      ticket_invoicetype = #{ticket_invoicetype,jdbcType=INTEGER},
+      tag = #{tag,jdbcType=INTEGER},
+      has_refund = #{has_refund,jdbcType=INTEGER},
+      refund = #{refund,jdbcType=VARCHAR},
+      part_refund = #{part_refund,jdbcType=INTEGER},
+      part_refundprice = #{part_refundprice,jdbcType=VARCHAR},
+      has_endorse = #{has_endorse,jdbcType=INTEGER},
+      endorse = #{endorse,jdbcType=VARCHAR},
+      part_endorse = #{part_endorse,jdbcType=INTEGER},
+      part_endorseprice = #{part_endorseprice,jdbcType=VARCHAR},
+      endorsement = #{endorsement,jdbcType=INTEGER},
+      has_noshow = #{has_noshow,jdbcType=INTEGER},
+      noshow_limittime = #{noshow_limittime,jdbcType=INTEGER},
+      penalty = #{penalty,jdbcType=VARCHAR},
+      special_noshow = #{special_noshow,jdbcType=INTEGER},
+      other = #{other,jdbcType=VARCHAR},
+      has_baggage = #{has_baggage,jdbcType=INTEGER},
+      baggage = #{baggage,jdbcType=VARCHAR},
+      max_seat = #{max_seat,jdbcType=INTEGER}
+    where p_id = #{p_id,jdbcType=INTEGER}
+  </update>
+    <update id="updateSeatsByPrimaryKey" parameterType="com.luhang.bean.RoutingRecord">
+    update routing_record
+    set 
+      max_seat = #{max_seat,jdbcType=INTEGER}
+    where p_id = #{p_id,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+</mapper>

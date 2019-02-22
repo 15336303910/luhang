@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.luhang.dao.PriceRecordMapper">
+  <resultMap id="BaseResultMap" type="com.luhang.bean.PriceRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="flight_num" jdbcType="VARCHAR" property="flight_num" />
+    <result column="date" jdbcType="DATE" property="date" />
+    <result column="week" jdbcType="VARCHAR" property="week" />
+    <result column="platform_web" jdbcType="VARCHAR" property="platform_web" />
+    <result column="sameairline_opp" jdbcType="INTEGER" property="sameairline_opp" />
+    <result column="diffairline_opp1" jdbcType="INTEGER" property="diffairline_opp1" />
+    <result column="diffairline_opp2" jdbcType="INTEGER" property="diffairline_opp2" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, flight_num, date, week, platform_web, sameairline_opp, diffairline_opp1, diffairline_opp2
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from price_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="findAllPriceRecord"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from price_record
+   WHERE
+   <![CDATA[   TO_DAYS( date) - TO_DAYS( NOW( ) )  <= 30 and TO_DAYS( date) - TO_DAYS( NOW( ) ) >=0 ]]> 
+  </select>
+  
+    <select id="findRecordByPlatformAndFlightnum"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from price_record
+   WHERE  
+          
+   <![CDATA[ platform_web= #{platform}  AND flight_num=#{flightNum} AND    TO_DAYS( date) - TO_DAYS( NOW( ) )  <= 30 and TO_DAYS( date) - TO_DAYS( NOW( ) ) >=0 ]]> 
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from price_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.luhang.bean.PriceRecord">
+    insert into price_record (id, flight_num, date, 
+      week, platform_web, sameairline_opp, 
+      diffairline_opp1, diffairline_opp2)
+    values (#{id,jdbcType=INTEGER}, #{flight_num,jdbcType=VARCHAR}, #{date,jdbcType=DATE}, 
+      #{week,jdbcType=VARCHAR}, #{platform_web,jdbcType=VARCHAR}, #{sameairline_opp,jdbcType=INTEGER}, 
+      #{diffairline_opp1,jdbcType=INTEGER}, #{diffairline_opp2,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.luhang.bean.PriceRecord">
+    insert into price_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="flight_num != null">
+        flight_num,
+      </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="week != null">
+        week,
+      </if>
+      <if test="platform_web != null">
+        platform_web,
+      </if>
+      <if test="sameairline_opp != null">
+        sameairline_opp,
+      </if>
+      <if test="diffairline_opp1 != null">
+        diffairline_opp1,
+      </if>
+      <if test="diffairline_opp2 != null">
+        diffairline_opp2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="flight_num != null">
+        #{flight_num,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="week != null">
+        #{week,jdbcType=VARCHAR},
+      </if>
+      <if test="platform_web != null">
+        #{platform_web,jdbcType=VARCHAR},
+      </if>
+      <if test="sameairline_opp != null">
+        #{sameairline_opp,jdbcType=INTEGER},
+      </if>
+      <if test="diffairline_opp1 != null">
+        #{diffairline_opp1,jdbcType=INTEGER},
+      </if>
+      <if test="diffairline_opp2 != null">
+        #{diffairline_opp2,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+
+    <insert id="insertBasicInfors" >
+    INSERT IGNORE INTO price_record (date, platform_web, flight_num) VALUES (str_to_date(#{date}, '%Y-%m-%d '), "去哪儿", #{flightNum})
+  </insert>
+  
+  
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.luhang.bean.PriceRecord">
+    update price_record
+    <set>
+      <if test="flight_num != null">
+        flight_num = #{flight_num,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="week != null">
+        week = #{week,jdbcType=VARCHAR},
+      </if>
+      <if test="platform_web != null">
+        platform_web = #{platform_web,jdbcType=VARCHAR},
+      </if>
+      <if test="sameairline_opp != null">
+        sameairline_opp = #{sameairline_opp,jdbcType=INTEGER},
+      </if>
+      <if test="diffairline_opp1 != null">
+        diffairline_opp1 = #{diffairline_opp1,jdbcType=INTEGER},
+      </if>
+      <if test="diffairline_opp2 != null">
+        diffairline_opp2 = #{diffairline_opp2,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.luhang.bean.PriceRecord">
+    update price_record
+    set flight_num = #{flight_num,jdbcType=VARCHAR},
+      date = #{date,jdbcType=DATE},
+      week = #{week,jdbcType=VARCHAR},
+      platform_web = #{platform_web,jdbcType=VARCHAR},
+      sameairline_opp = #{sameairline_opp,jdbcType=INTEGER},
+      diffairline_opp1 = #{diffairline_opp1,jdbcType=INTEGER},
+      diffairline_opp2 = #{diffairline_opp2,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByDateFlight" parameterType="com.luhang.bean.PriceRecord">
+    update price_record
+    <set>
+    
+      
+      <if test="week != null">
+        week = #{week,jdbcType=VARCHAR},
+      </if>
+      <if test="platform_web != null">
+        platform_web = #{platform_web,jdbcType=VARCHAR},
+      </if>
+      <if test="sameairline_opp != null">
+        sameairline_opp = #{sameairline_opp,jdbcType=INTEGER},
+      </if>
+      <if test="diffairline_opp1 != null">
+        diffairline_opp1 = #{diffairline_opp1,jdbcType=INTEGER},
+      </if>
+      <if test="diffairline_opp2 != null">
+        diffairline_opp2 = #{diffairline_opp2,jdbcType=INTEGER},
+      </if>
+    </set>
+   where 
+                date= #{date,jdbcType=DATE}  and     flight_num = #{flight_num,jdbcType=VARCHAR}
+  </update>
+</mapper>

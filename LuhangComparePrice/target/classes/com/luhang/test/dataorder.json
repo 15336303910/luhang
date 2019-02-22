@@ -1,0 +1,106 @@
+{
+
+"cid": "test",
+"orderSource": 1,
+
+"tripTpye": "1",
+"sessionId": "S12345",
+
+
+"routing": {
+"data": "3da0a93eba26c6e8f28955fe65f426fadbec03d9",
+
+"fromSegments": [
+{
+
+"carrier": "7C",
+"depAirport": "WEH",
+
+"depTime": "201812181810",
+"arrAirport": "SEL",
+
+"arrTime": "201812181916",
+"stopCities": "",
+
+"codeshare": false,
+
+"cabin": "E",
+"aircraftCode": "Boeing 737",
+
+"flightNumber": "7C8504",
+"group": 1
+
+},
+{
+
+"carrier": "CA",
+"depAirport": "HKG",
+
+"depTime": "201204151400",
+"arrAirport": "TPE",
+
+"arrTime": "201204151715",
+"stopCities": "",
+
+"codeshare": false,
+"cabin": "E",
+
+"aircraftCode": "Boeing 737",
+"flightNumber": "CA189",
+"group": 2
+}
+
+],
+"retSegments": []
+
+},
+"passengers": [
+
+{
+"name": " Marcus/Tom",
+
+"ageType": 0,
+"birthday": "19740225",
+
+"gender": "M",
+"cardType": "PP",
+
+"cardNum": "G756789",
+
+"cardExpired": "20200101",
+"cardIssuePlace": "CN",
+
+"nationality": "CN"
+},
+
+{
+"name": " Marcus/Jack",
+
+"ageType": 1,
+"birthday": "20060225",
+
+"gender": "M",
+"cardType": "PP",
+
+"cardNum": "G756789",
+"cardExpired": "20200101",
+"cardIssuePlace": "CN",
+"nationality": "CN"
+}
+
+],
+"contact": {
+
+"name": " Marcus/Tom ",
+"address": "xxxx spring valley road",
+
+"postcode": "12345",
+"email": "",
+
+"mobile": "13800000000"
+}
+
+
+
+
+}
